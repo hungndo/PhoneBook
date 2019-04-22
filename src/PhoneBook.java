@@ -1,14 +1,19 @@
 import java.io.*;
 import java.util.Scanner;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.Button;
+
 public class PhoneBook{
     private static Entry[] entryList = new Entry[200];
     private static Scanner stdin = new Scanner(System.in);
     private static String command ="";
     private static String filename = "phonebook.txt";
     private static int entryIndex = 0;
-    public static void main(String[] args) throws Exception{
-
+    
+    PhoneBook() {//throws Exception{
+/*
         System.out.println("Use \"e\" for enter, \"e\" for find, \"l\" for list, \"q\" for quit.");
         //read from file
         try {
@@ -46,7 +51,7 @@ public class PhoneBook{
         }
         catch (FileNotFoundException ex){
             ex.printStackTrace();
-        }
+        }*/
     }
     public static int readPhoneBook (String FileName) throws Exception{
         File F = new File(FileName);
@@ -109,4 +114,5 @@ public class PhoneBook{
         entryList[entryIndex].notes= stdin.nextLine();
         entryIndex++;
     }
+
 }
