@@ -12,16 +12,11 @@ public class PhoneBook{
     private static String filename = "phonebook.txt";
     private static int entryIndex = 0;
     
-    PhoneBook() {//throws Exception{
-/*
+    PhoneBook()throws Exception{
         System.out.println("Use \"e\" for enter, \"e\" for find, \"l\" for list, \"q\" for quit.");
         //read from file
-        try {
-            entryIndex = readPhoneBook(filename);
-        }
-        catch (FileNotFoundException ex){
-            ex.printStackTrace();
-        }
+        readPhoneBook();
+        /*
         // main loop
         while(!command.equals("q")) {
             System.out.print("Command: ");
@@ -44,6 +39,7 @@ public class PhoneBook{
                     System.out.println("Invalid command!");
             }
         }
+        */
         System.out.println("Storing file.");
         // store file
         try {
@@ -51,26 +47,30 @@ public class PhoneBook{
         }
         catch (FileNotFoundException ex){
             ex.printStackTrace();
-        }*/
-    }
-    public static int readPhoneBook (String FileName) throws Exception{
-        File F = new File(FileName);
-        Scanner reader = new Scanner(F);
-        String currentLine;
-        while(reader.hasNextLine()){
-            currentLine = reader.nextLine();
-            String emptySpace = currentLine.trim();
-            if(!emptySpace.equals("")) {
-                String[] splitString = currentLine.split("\\t+");
-                entryList[entryIndex] = new Entry();
-                entryList[entryIndex].name = splitString[0];
-                entryList[entryIndex].number = splitString[1];
-                entryList[entryIndex].notes = splitString[2];
-                entryIndex++;
-            }
         }
-        reader.close();
-        return entryIndex;
+    }
+    public static void readPhoneBook () throws Exception{
+        try {
+	    	File F = new File(filename);
+	        Scanner reader = new Scanner(F);
+	        String currentLine;
+	        while(reader.hasNextLine()){
+	            currentLine = reader.nextLine();
+	            String emptySpace = currentLine.trim();
+	            if(!emptySpace.equals("")) {
+	                String[] splitString = currentLine.split("\\t+");
+	                entryList[entryIndex] = new Entry();
+	                entryList[entryIndex].name = splitString[0];
+	                entryList[entryIndex].number = splitString[1];
+	                entryList[entryIndex].notes = splitString[2];
+	                entryIndex++;
+	            }
+	        }
+	        reader.close();
+        }
+        catch(FileNotFoundException ex) {
+        	ex.printStackTrace();
+        }
     }
     public static void storePhoneBook (String FileName) throws Exception{
         PrintStream P = new PrintStream(FileName);
