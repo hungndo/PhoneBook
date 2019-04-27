@@ -66,7 +66,7 @@ public class Launcher extends Application{
 		GridPane.setConstraints(passInput, 1, 1);
 		
 		Button loginButton = new Button("log in");
-		loginButton.setOnAction(e -> System.out.println(nameInput.getText()));
+		loginButton.setOnAction(e -> AlertBox.display());
 		GridPane.setConstraints(loginButton, 1, 2);
 		
 		grid.getChildren().addAll(nameLabel, nameInput, passLabel, passInput, loginButton);

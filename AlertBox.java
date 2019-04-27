@@ -1,6 +1,7 @@
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -8,21 +9,20 @@ import javafx.stage.Stage;
 
 public class AlertBox {
 	
-	public static void display(String title, String message) {
+	public static void display() {
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
-		window.setTitle(title);
+		window.setTitle("Checkbox");
 		window.setMinWidth(250);
 		
-		Label label = new Label();
-		label.setText(message);
+		CheckBox box1 = new CheckBox("Male");
+		CheckBox box2 = new CheckBox("Female");
 		
-		Button closeButton = new Button("Close the window");
-		closeButton.setOnAction(e -> window.close());
+		Button button = new Button("Choose");
 		
 		VBox layout = new VBox(10);
-		layout.getChildren().addAll(label, closeButton);
 		layout.setAlignment(Pos.CENTER);
+		layout.getChildren().addAll(box1,box2, button);
 		
 		Scene scene = new Scene(layout);
 		window.setScene(scene);
