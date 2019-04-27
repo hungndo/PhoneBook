@@ -1,8 +1,14 @@
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -23,22 +29,13 @@ public class Launcher extends Application{
 	public void start(Stage myStage) throws Exception {
 		window = myStage;
 		window.setTitle("Phone Book");
-		buttonListAllEntries.setOnAction(event -> PhoneBook.listAllEntries());
-		buttonFindEntry.setOnAction(event -> AlertBox.display("Alert", "anything"));
-		buttonEnterEntry.setOnAction(event -> {
-			closeProgram();
-		});
 		window.setOnCloseRequest(event ->{
 			event.consume();
 			closeProgram();
 		});
 		
-		VBox layout = new VBox();
-		layout.getChildren().addAll(buttonListAllEntries, buttonFindEntry, buttonEnterEntry);
 		
-		Scene scene = new Scene(layout, 300, 250);
-		
-		window.setScene(scene);
+		showLoginScene();
 		window.show();
 		
 	}
@@ -48,5 +45,33 @@ public class Launcher extends Application{
 		if(answer) {
 			window.close();
 		}
+	}
+	public void showLoginScene() {
+		GridPane grid = new GridPane();
+		grid.setPadding( new Insets(10,10,100,10));
+		grid.setVgap(8);
+		grid.setHgap(10);
+		
+		Label nameLabel = new Label("Username:");
+		GridPane.setConstraints(nameLabel, 0,0);
+		
+		TextField nameInput = new TextField();
+		GridPane.setConstraints(nameInput, 1, 0);
+		
+		Label passLabel = new Label("Pass:");
+		GridPane.setConstraints(passLabel, 0,1);
+		
+		TextField passInput = new TextField();
+		passInput.setPromptText("password");
+		GridPane.setConstraints(passInput, 1, 1);
+		
+		Button loginButton = new Button("log in");
+		loginButton.setOnAction(e -> System.out.println(nameInput.getText()));
+		GridPane.setConstraints(loginButton, 1, 2);
+		
+		grid.getChildren().addAll(nameLabel, nameInput, passLabel, passInput, loginButton);
+		
+		Scene scene = new Scene(grid, 300, 250);
+		window.setScene(scene);
 	}
 }
