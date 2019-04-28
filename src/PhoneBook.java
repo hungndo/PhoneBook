@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import javafx.event.ActionEvent;
@@ -7,6 +8,7 @@ import javafx.scene.control.Button;
 
 public class PhoneBook{
     private static Entry[] entryList = new Entry[200];
+	private static int[] entryIndexList = new int[200];
     private static Scanner stdin = new Scanner(System.in);
     private static String command ="";
     private static String filename = "phonebook.txt";
@@ -63,6 +65,7 @@ public class PhoneBook{
 	                entryList[entryIndex].name = splitString[0];
 	                entryList[entryIndex].number = splitString[1];
 	                entryList[entryIndex].notes = splitString[2];
+	                entryIndexList[entryIndex] = entryIndex;
 	                entryIndex++;
 	            }
 	        }
@@ -75,18 +78,18 @@ public class PhoneBook{
     public static void storePhoneBook (String FileName) throws Exception{
         PrintStream P = new PrintStream(FileName);
         for (int i=0; i < entryIndex; i++) {
-            P.println(entryList[i].name + "\t" +
-                    entryList [i].number + "\t" +
-                    entryList [i].notes);
+            P.println(entryList[entryIndexList[i]].name + "\t" +
+                    entryList [entryIndexList[i]].number + "\t" +
+                    entryList [entryIndexList[i]].notes);
         }
         P.close();
         System.out.println("Phone book stored.");
     }
     public static void listAllEntries(){
         for (int i=0; i < entryIndex ; i++) {
-            System.out.println("--"+ entryList[i].name
-                    +"  "+entryList[i].number
-                    +"  "+entryList[i].notes);
+            System.out.println("--"+ entryList[entryIndexList[i]].name
+                    +"  "+entryList[entryIndexList[i]].number
+                    +"  "+entryList[entryIndexList[i]].notes);
         }
     }
     public static void findEntry(String name){
@@ -113,6 +116,34 @@ public class PhoneBook{
         System.out.print("Enter notes:");
         entryList[entryIndex].notes= stdin.nextLine();
         entryIndex++;
+    }
+    public static void sortEntry() {
+    	// this function sorts the entryIndexList instead of directly to the entryList
+    	// so that every it swaps two element, it doesn't need to swap whole objects
+    	for(int j = entryIndexList.length ;j>0;j--) {
+    		for(int i = 0 ; i< j ; i++) {
+    			if( compareStringAlphabetically(entryList[entryIndexList[i]].name, entryList[entryIndexList[i+1]].name)>1)  {
+    				int temp = entryIndexList[i];
+    				entryIndexList[i] = entryIndexList[i+1];
+    				entryIndexList[i+1] = temp;
+    			}
+    			
+    		}
+    	}
+    }
+    private static int compareStringAlphabetically(String stringA, String stringB) {
+    	int compareLength = Math.min(stringA.length(), stringB.length());
+    	for(int i =0 ; i< compareLength; i++) {
+    		if(stringA.charAt(i)!=stringB.charAt(i)) {
+    			return stringA.charAt(i) - stringB.charAt(i);
+    		}
+    	}
+    	if(stringA.length()!=stringB.length()) {
+    		return stringA.length() - stringB.length();
+    	}
+    	else {
+    		return 0;
+    	}
     }
 
 }
