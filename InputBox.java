@@ -1,42 +1,30 @@
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class InputBox {
-	static boolean answer;
-	public static boolean display(String title, String message) {
+	public static void display() {
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
-		window.setTitle(title);
+		window.setTitle("Checkbox");
 		window.setMinWidth(250);
 		
-		Label label = new Label();
-		label.setText(message);
+		CheckBox box1 = new CheckBox("Male");
+		CheckBox box2 = new CheckBox("Female");
 		
-		Button yesButton = new Button("Yes");
-		Button noButton = new Button("No");
-		yesButton.setOnAction(event ->{
-			answer = true;
-			window.close();
-		});
-		noButton.setOnAction(event ->{
-			answer = false;
-			window.close();
-		});
-		
+		Button button = new Button("Choose");
 		
 		VBox layout = new VBox(10);
-		layout.getChildren().addAll(label,yesButton,noButton);
 		layout.setAlignment(Pos.CENTER);
+		layout.getChildren().addAll(box1,box2, button);
 		
 		Scene scene = new Scene(layout);
 		window.setScene(scene);
-		window.showAndWait();
-		
-		return answer;
+		window.show();
 	}
 }

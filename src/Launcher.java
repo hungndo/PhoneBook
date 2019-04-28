@@ -23,6 +23,8 @@ public class Launcher extends Application{
     public static void main(String[] args) throws Exception {
 		PhoneBook.readPhoneBook();
 		launch(args);
+		String a = "abc";
+		System.out.println(a.charAt(3));
 	}
 
 	@Override
@@ -40,7 +42,7 @@ public class Launcher extends Application{
 		
 	}
 	public void closeProgram() {
-		boolean answer = InputBox.display("Input","Are you sure?");
+		boolean answer = AlertBox.display("Input","Are you sure?");
 		System.out.println("Closing");
 		if(answer) {
 			window.close();
@@ -66,7 +68,7 @@ public class Launcher extends Application{
 		GridPane.setConstraints(passInput, 1, 1);
 		
 		Button loginButton = new Button("log in");
-		loginButton.setOnAction(e -> AlertBox.display());
+		loginButton.setOnAction(e -> InputBox.display());
 		GridPane.setConstraints(loginButton, 1, 2);
 		
 		grid.getChildren().addAll(nameLabel, nameInput, passLabel, passInput, loginButton);

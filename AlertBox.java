@@ -9,23 +9,36 @@ import javafx.stage.Stage;
 
 public class AlertBox {
 	
-	public static void display() {
+	static boolean answer;
+	public static boolean display(String title, String message) {
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
-		window.setTitle("Checkbox");
+		window.setTitle(title);
 		window.setMinWidth(250);
 		
-		CheckBox box1 = new CheckBox("Male");
-		CheckBox box2 = new CheckBox("Female");
+		Label label = new Label();
+		label.setText(message);
 		
-		Button button = new Button("Choose");
+		Button yesButton = new Button("Yes");
+		Button noButton = new Button("No");
+		yesButton.setOnAction(event ->{
+			answer = true;
+			window.close();
+		});
+		noButton.setOnAction(event ->{
+			answer = false;
+			window.close();
+		});
+		
 		
 		VBox layout = new VBox(10);
+		layout.getChildren().addAll(label,yesButton,noButton);
 		layout.setAlignment(Pos.CENTER);
-		layout.getChildren().addAll(box1,box2, button);
 		
 		Scene scene = new Scene(layout);
 		window.setScene(scene);
-		window.show();
+		window.showAndWait();
+		
+		return answer;
 	}
 }
