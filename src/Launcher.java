@@ -31,28 +31,10 @@ public class Launcher extends Application{
 			closeProgram();
 		});
 		
-		showMainScene();
-		//showLoginScene();
+		LoginScene.display();
 		
 	}
-	public void showMainScene() {
-		GridPane grid = new GridPane();
-		grid.setPadding( new Insets(10,10,10,10));
-		grid.setVgap(8);
-		grid.setHgap(10);
-		
-		Label[] nameLabel = new Label[PhoneBook.entryIndexList.length];
-		for(int i = 0; i< PhoneBook.entryIndex;i++) {
-			String temp = PhoneBook.entryList[PhoneBook.entryIndexList[i]].name;
-			temp += " "+PhoneBook.entryList[PhoneBook.entryIndexList[i]].number;
-			temp += " "+PhoneBook.entryList[PhoneBook.entryIndexList[i]].notes;
-			nameLabel[i]=new Label(temp);
-			GridPane.setConstraints(nameLabel[i], 0, i);
-		}
-		for(int i = 0; i< PhoneBook.entryIndex;i++) {
-			grid.getChildren().addAll(nameLabel[i]);
-		}
-		Scene scene = new Scene(grid, 300, 250);
+	public static void navigator(Scene scene) {
 		window.setScene(scene);
 		window.show();
 	}
@@ -62,34 +44,5 @@ public class Launcher extends Application{
 		if(answer) {
 			window.close();
 		}
-	}
-	public void showLoginScene() {
-		GridPane grid = new GridPane();
-		grid.setPadding( new Insets(10,10,10,10));
-		grid.setVgap(8);
-		grid.setHgap(10);
-		
-		Label nameLabel = new Label("Username:");
-		GridPane.setConstraints(nameLabel, 0,0);
-		
-		TextField nameInput = new TextField();
-		GridPane.setConstraints(nameInput, 1, 0);
-		
-		Label passLabel = new Label("Pass:");
-		GridPane.setConstraints(passLabel, 0,1);
-		
-		TextField passInput = new TextField();
-		passInput.setPromptText("password");
-		GridPane.setConstraints(passInput, 1, 1);
-		
-		Button loginButton = new Button("log in");
-		loginButton.setOnAction(e -> InputBox.display());
-		GridPane.setConstraints(loginButton, 1, 2);
-		
-		grid.getChildren().addAll(nameLabel, nameInput, passLabel, passInput, loginButton);
-		
-		Scene scene = new Scene(grid, 300, 250);
-		window.setScene(scene);
-		window.show();
 	}
 }
