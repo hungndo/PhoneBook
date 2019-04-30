@@ -7,15 +7,14 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
 public class PhoneBook{
-    private static Entry[] entryList = new Entry[200];
-	private static int[] entryIndexList = new int[200];
+    public static Entry[] entryList = new Entry[200];
+	public static int[] entryIndexList = new int[200];
     private static Scanner stdin = new Scanner(System.in);
     private static String command ="";
     private static String filename = "phonebook.txt";
-    private static int entryIndex = 0;
+    public static int entryIndex = 0;
     
     PhoneBook()throws Exception{
-        System.out.println("Use \"e\" for enter, \"e\" for find, \"l\" for list, \"q\" for quit.");
         //read from file
         readPhoneBook();
         /*
@@ -74,6 +73,8 @@ public class PhoneBook{
         catch(FileNotFoundException ex) {
         	ex.printStackTrace();
         }
+        sortEntry();
+        listAllEntries();
     }
     public static void storePhoneBook (String FileName) throws Exception{
         PrintStream P = new PrintStream(FileName);
@@ -120,7 +121,7 @@ public class PhoneBook{
     public static void sortEntry() {
     	// this function sorts the entryIndexList instead of directly to the entryList
     	// so that every it swaps two element, it doesn't need to swap whole objects
-    	for(int j = entryIndexList.length ;j>0;j--) {
+    	for(int j = entryIndex-1 ;j>0;j--) {
     		for(int i = 0 ; i< j ; i++) {
     			if( compareStringAlphabetically(entryList[entryIndexList[i]].name, entryList[entryIndexList[i+1]].name)>1)  {
     				int temp = entryIndexList[i];
@@ -138,6 +139,7 @@ public class PhoneBook{
     			return stringA.charAt(i) - stringB.charAt(i);
     		}
     	}
+
     	if(stringA.length()!=stringB.length()) {
     		return stringA.length() - stringB.length();
     	}

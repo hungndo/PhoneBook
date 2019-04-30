@@ -15,16 +15,11 @@ import javafx.stage.Stage;
 
 
 public class Launcher extends Application{
-    private static Button buttonListAllEntries = new Button("List");
-    private static Button buttonFindEntry = new Button("Find");
-    private static Button buttonEnterEntry = new Button("Create");
-	Stage window;
+	private static Stage window;
     
     public static void main(String[] args) throws Exception {
 		PhoneBook.readPhoneBook();
 		launch(args);
-		String a = "abc";
-		System.out.println(a.charAt(3));
 	}
 
 	@Override
@@ -36,13 +31,33 @@ public class Launcher extends Application{
 			closeProgram();
 		});
 		
-		
-		showLoginScene();
-		window.show();
+		showMainScene();
+		//showLoginScene();
 		
 	}
+	public void showMainScene() {
+		GridPane grid = new GridPane();
+		grid.setPadding( new Insets(10,10,10,10));
+		grid.setVgap(8);
+		grid.setHgap(10);
+		
+		Label[] nameLabel = new Label[PhoneBook.entryIndexList.length];
+		for(int i = 0; i< PhoneBook.entryIndex;i++) {
+			String temp = PhoneBook.entryList[PhoneBook.entryIndexList[i]].name;
+			temp += " "+PhoneBook.entryList[PhoneBook.entryIndexList[i]].number;
+			temp += " "+PhoneBook.entryList[PhoneBook.entryIndexList[i]].notes;
+			nameLabel[i]=new Label(temp);
+			GridPane.setConstraints(nameLabel[i], 0, i);
+		}
+		for(int i = 0; i< PhoneBook.entryIndex;i++) {
+			grid.getChildren().addAll(nameLabel[i]);
+		}
+		Scene scene = new Scene(grid, 300, 250);
+		window.setScene(scene);
+		window.show();
+	}
 	public void closeProgram() {
-		boolean answer = AlertBox.display("Input","Are you sure?");
+		boolean answer = AlertBox.display("Closing","Are you sure?");
 		System.out.println("Closing");
 		if(answer) {
 			window.close();
@@ -50,7 +65,7 @@ public class Launcher extends Application{
 	}
 	public void showLoginScene() {
 		GridPane grid = new GridPane();
-		grid.setPadding( new Insets(10,10,100,10));
+		grid.setPadding( new Insets(10,10,10,10));
 		grid.setVgap(8);
 		grid.setHgap(10);
 		
@@ -75,5 +90,6 @@ public class Launcher extends Application{
 		
 		Scene scene = new Scene(grid, 300, 250);
 		window.setScene(scene);
+		window.show();
 	}
 }
