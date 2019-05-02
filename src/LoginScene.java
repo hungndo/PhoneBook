@@ -6,7 +6,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 public class LoginScene {
-	private static String username = "EECS";
+	private static String username = "EECS1510";
 	private static String password = "123456";
 	public static void display() {
 		GridPane grid = new GridPane();
@@ -18,13 +18,14 @@ public class LoginScene {
 		GridPane.setConstraints(nameLabel, 0,1);
 		
 		TextField nameInput = new TextField();
+		nameInput.setText("EECS1510");
 		GridPane.setConstraints(nameInput, 1, 1);
 		
 		Label passLabel = new Label("Pass:");
 		GridPane.setConstraints(passLabel, 0,2);
 		
 		TextField passInput = new TextField();
-		passInput.setPromptText("password");
+		passInput.setPromptText("123456");
 		GridPane.setConstraints(passInput, 1, 2);
 		
 		Button loginButton = new Button("log in");

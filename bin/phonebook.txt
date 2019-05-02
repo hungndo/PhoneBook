@@ -1,5 +1,7 @@
-Bill	419-536-1234		 Bill Gates
-JB	510-0114		Charlie's place
-Jones	413-257-1234		Karen and Jason
-wm	419-257-1234		Walmart
-Jcik	301-201-218	I'm Jick
+Bill	419-536-1234	 Bill Gates
+Black Panther	192-182-2981	Wakanda!!!
+Bosolnaro Smith	923-239-2938	I'm a man
+JB	192-293-1929	My full name is Justin Bieber
+Jcik	293-298-2938	My name is Jick
+Jones	413-257-1234	Karen and Jason
+wm	419-257-1234	Walmart

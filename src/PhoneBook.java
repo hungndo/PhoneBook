@@ -8,7 +8,6 @@ public class PhoneBook{
 	public static int[] entryIndexList = new int[200];
     private static String filename = "phonebook.txt";
     public static int entryIndex = 0;
-    
     PhoneBook()throws Exception{
         //read from file
         readPhoneBook();
@@ -35,7 +34,6 @@ public class PhoneBook{
         	ex.printStackTrace();
         }
         sortEntry();
-        listAllEntries();
     }
     public static void storePhoneBook () throws Exception{
         PrintStream P = new PrintStream(filename);
@@ -47,22 +45,13 @@ public class PhoneBook{
         P.close();
         System.out.println("Phone book stored.");
     }
-    public static void listAllEntries(){
-        for (int i=0; i < entryIndex ; i++) {
-            System.out.println("--"+ entryList[entryIndexList[i]].name
-                    +"  "+entryList[entryIndexList[i]].number
-                    +"  "+entryList[entryIndexList[i]].notes);
-        }
-    }
+
     public static int findEntry(String name){
         int indexOfFoundEntry = -1;
         String tempName = name.toUpperCase();
         for(int i=0; i<entryIndex;i++){
             String tempEntryName = entryList[entryIndexList[i]].name.toUpperCase();
             if(tempName.equals(tempEntryName)){
-                System.out.println("--" + entryList[i].name+
-                        "  " + entryList [i].number+
-                        "  " + entryList [i].notes);
                 indexOfFoundEntry= i;
                 break;
             }
@@ -70,15 +59,13 @@ public class PhoneBook{
         return indexOfFoundEntry;
     }
     public static void addEntry(String name, String number, String notes){
-        Entry newEntry = new Entry(name,number,notes);
+    	Entry newEntry = new Entry(name,number,notes);
         int duplicateIndex = findEntry(newEntry.name);
     	if(duplicateIndex == -1) {
     		entryList[entryIndex]= newEntry;
     		entryIndexList[entryIndex] = entryIndex;
             entryIndex++;
             sortEntry();
-            for(int i =0;i<entryIndex;i++)
-            	System.out.println(entryIndexList[i]+" ");
         }
         else {
         	AlertBox.display("Warning", "You already have this person in your contact"
