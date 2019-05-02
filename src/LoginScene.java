@@ -42,7 +42,7 @@ public class LoginScene {
 		
 		grid.getChildren().addAll(nameLabel, nameInput, passLabel, passInput, loginButton);
 		
-		Scene scene = new Scene(grid, 300, 250);
+		Scene scene = new Scene(grid, 280, 200);
 		Launcher.navigator(scene);
 	}
 	public static boolean authenticate(String enteredName,String enteredPass) {

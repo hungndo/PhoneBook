@@ -14,7 +14,6 @@ public class AlertBox {
 		Stage window = new Stage();
 		window.initModality(Modality.APPLICATION_MODAL);
 		window.setTitle(title);
-		window.setMinWidth(250);
 		
 		Label label = new Label();
 		label.setText(message);
@@ -35,7 +34,7 @@ public class AlertBox {
 		layout.getChildren().addAll(label,yesButton,noButton);
 		layout.setAlignment(Pos.CENTER);
 		
-		Scene scene = new Scene(layout);
+		Scene scene = new Scene(layout,500,150);
 		window.setScene(scene);
 		window.showAndWait();
 	}

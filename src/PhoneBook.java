@@ -1,16 +1,11 @@
 import java.io.*;
-import java.util.Arrays;
 import java.util.Scanner;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
 
 public class PhoneBook{
     public static Entry[] entryList = new Entry[200];
     // I will later call each element of entryList indirectly using entryIndexList
 	public static int[] entryIndexList = new int[200];
-    private static Scanner stdin = new Scanner(System.in);
     private static String filename = "phonebook.txt";
     public static int entryIndex = 0;
     
@@ -19,7 +14,7 @@ public class PhoneBook{
         readPhoneBook();
     }
     //for adding and reading entries, always refers to the next object via entryIndex
-public static void readPhoneBook () throws Exception{
+    public static void readPhoneBook () throws Exception{
         try {
 	    	File F = new File(filename);
 	        Scanner reader = new Scanner(F);
@@ -42,8 +37,8 @@ public static void readPhoneBook () throws Exception{
         sortEntry();
         listAllEntries();
     }
-    public static void storePhoneBook (String FileName) throws Exception{
-        PrintStream P = new PrintStream(FileName);
+    public static void storePhoneBook () throws Exception{
+        PrintStream P = new PrintStream(filename);
         for (int i=0; i < entryIndex; i++) {
             P.println(entryList[entryIndexList[i]].name + "\t" +
                     entryList [entryIndexList[i]].number + "\t" +
@@ -77,9 +72,13 @@ public static void readPhoneBook () throws Exception{
     public static void addEntry(String name, String number, String notes){
         Entry newEntry = new Entry(name,number,notes);
         int duplicateIndex = findEntry(newEntry.name);
-    	if(duplicateIndex != -1) {
+    	if(duplicateIndex == -1) {
     		entryList[entryIndex]= newEntry;
-            entryIndex++;	
+    		entryIndexList[entryIndex] = entryIndex;
+            entryIndex++;
+            sortEntry();
+            for(int i =0;i<entryIndex;i++)
+            	System.out.println(entryIndexList[i]+" ");
         }
         else {
         	AlertBox.display("Warning", "You already have this person in your contact"
