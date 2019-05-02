@@ -30,7 +30,6 @@ public class Launcher extends Application{
 			event.consume();
 			closeProgram();
 		});
-		
 		LoginScene.display();
 		
 	}
@@ -39,9 +38,9 @@ public class Launcher extends Application{
 		window.show();
 	}
 	public void closeProgram() {
-		boolean answer = AlertBox.display("Closing","Are you sure?");
+		AlertBox.display("Closing","Are you sure?");
 		System.out.println("Closing");
-		if(answer) {
+		if(AlertBox.answer) {
 			window.close();
 		}
 	}

@@ -8,49 +8,18 @@ import javafx.scene.control.Button;
 
 public class PhoneBook{
     public static Entry[] entryList = new Entry[200];
+    // I will later call each element of entryList indirectly using entryIndexList
 	public static int[] entryIndexList = new int[200];
     private static Scanner stdin = new Scanner(System.in);
-    private static String command ="";
     private static String filename = "phonebook.txt";
     public static int entryIndex = 0;
     
     PhoneBook()throws Exception{
         //read from file
         readPhoneBook();
-        /*
-        // main loop
-        while(!command.equals("q")) {
-            System.out.print("Command: ");
-            command= stdin.nextLine();
-            switch (command.charAt(0)) {
-                //enter
-                case 'e':
-                    enterEntry(command.substring(2));
-                    break;
-                //find
-                case 'f':
-                    String name = command.substring(2);
-                    findEntry(name);
-                    break;
-                //list
-                case 'l':
-                    listAllEntries();
-                    break;
-                default:
-                    System.out.println("Invalid command!");
-            }
-        }
-        */
-        System.out.println("Storing file.");
-        // store file
-        try {
-            storePhoneBook(filename);
-        }
-        catch (FileNotFoundException ex){
-            ex.printStackTrace();
-        }
     }
-    public static void readPhoneBook () throws Exception{
+    //for adding and reading entries, always refers to the next object via entryIndex
+public static void readPhoneBook () throws Exception{
         try {
 	    	File F = new File(filename);
 	        Scanner reader = new Scanner(F);
@@ -60,10 +29,7 @@ public class PhoneBook{
 	            String emptySpace = currentLine.trim();
 	            if(!emptySpace.equals("")) {
 	                String[] splitString = currentLine.split("\\t+");
-	                entryList[entryIndex] = new Entry();
-	                entryList[entryIndex].name = splitString[0];
-	                entryList[entryIndex].number = splitString[1];
-	                entryList[entryIndex].notes = splitString[2];
+	                entryList[entryIndex] = new Entry(splitString[0],splitString[1],splitString[2]);
 	                entryIndexList[entryIndex] = entryIndex;
 	                entryIndex++;
 	            }
@@ -93,30 +59,36 @@ public class PhoneBook{
                     +"  "+entryList[entryIndexList[i]].notes);
         }
     }
-    public static void findEntry(String name){
-        boolean found = false;
+    public static int findEntry(String name){
+        int indexOfFoundEntry = -1;
         String tempName = name.toUpperCase();
         for(int i=0; i<entryIndex;i++){
-            String tempEntryName = entryList[i].name.toUpperCase();
+            String tempEntryName = entryList[entryIndexList[i]].name.toUpperCase();
             if(tempName.equals(tempEntryName)){
                 System.out.println("--" + entryList[i].name+
                         "  " + entryList [i].number+
                         "  " + entryList [i].notes);
-                found= true;
+                indexOfFoundEntry= i;
                 break;
             }
         }
-        if(!found)
-            System.out.println("** No entry with code "+ name);
+        return indexOfFoundEntry;
     }
-    public static void enterEntry(String name){
-        entryList[entryIndex]= new Entry();
-        entryList[entryIndex].name = name;
-        System.out.print("Enter number: ");
-        entryList[entryIndex].number= stdin.nextLine();
-        System.out.print("Enter notes:");
-        entryList[entryIndex].notes= stdin.nextLine();
-        entryIndex++;
+    public static void addEntry(String name, String number, String notes){
+        Entry newEntry = new Entry(name,number,notes);
+        int duplicateIndex = findEntry(newEntry.name);
+    	if(duplicateIndex != -1) {
+    		entryList[entryIndex]= newEntry;
+            entryIndex++;	
+        }
+        else {
+        	AlertBox.display("Warning", "You already have this person in your contact"
+        			+ " list, do you want to merge two contacts?");
+        	if(AlertBox.answer == true)
+        	{
+        		mergeDuplicateEntry(duplicateIndex, newEntry);
+        	}
+        }
     }
     public static void sortEntry() {
     	// this function sorts the entryIndexList instead of directly to the entryList
@@ -147,5 +119,9 @@ public class PhoneBook{
     		return 0;
     	}
     }
-
+    private static void mergeDuplicateEntry(int indexOfEntryThatNeedsToBeReplaced,Entry newEntry) {
+    	entryList[entryIndexList[indexOfEntryThatNeedsToBeReplaced]].name = newEntry.name;
+    	entryList[entryIndexList[indexOfEntryThatNeedsToBeReplaced]].number = newEntry.number;
+    	entryList[entryIndexList[indexOfEntryThatNeedsToBeReplaced]].notes = newEntry.notes;
+    }
 }
