@@ -6,8 +6,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 public class MainScene {
-	private static 	GridPane grid = new GridPane();
 	public static void display() {
+		GridPane grid = new GridPane();
 		grid.setPadding( new Insets(10,10,10,10));
 		grid.setVgap(8);
 		grid.setHgap(10);
@@ -23,7 +23,20 @@ public class MainScene {
 		grid.getChildren().addAll(title[0],title[1],title[2]);
 		
 		//list entries
-		listAllEntries();
+		Label[] nameLabel = new Label[PhoneBook.entryIndexList.length];
+		Label[] numberLabel = new Label[PhoneBook.entryIndexList.length];
+		Label[] notesLabel = new Label[PhoneBook.entryIndexList.length];
+		for(int i = 0; i< PhoneBook.entryIndex;i++) {
+			nameLabel[i]= new Label(PhoneBook.entryList[PhoneBook.entryIndexList[i]].name);
+			numberLabel[i]=new Label(PhoneBook.entryList[PhoneBook.entryIndexList[i]].number);
+			notesLabel[i]=new Label(PhoneBook.entryList[PhoneBook.entryIndexList[i]].notes);
+			GridPane.setConstraints(nameLabel[i], 0, i+2);
+			GridPane.setConstraints(numberLabel[i], 1, i+2);
+			GridPane.setConstraints(notesLabel[i], 2, i+2);
+		}
+		for(int i = 0; i< PhoneBook.entryIndex;i++) {
+			grid.getChildren().addAll(nameLabel[i],numberLabel[i],notesLabel[i]);
+		}
 		
 		// text fields for entering new entries
 		TextField entryName = new TextField();
@@ -41,23 +54,7 @@ public class MainScene {
 		});
 		grid.getChildren().addAll(addButton,entryName,entryNumber,entryNotes);
 		//
-		Scene scene = new Scene(grid, 630, 250);
+		Scene scene = new Scene(grid, 630, 500);
 		Launcher.navigator(scene);
-	}
-	public static void listAllEntries() {
-		Label[] nameLabel = new Label[PhoneBook.entryIndexList.length];
-		Label[] numberLabel = new Label[PhoneBook.entryIndexList.length];
-		Label[] notesLabel = new Label[PhoneBook.entryIndexList.length];
-		for(int i = 0; i< PhoneBook.entryIndex;i++) {
-			nameLabel[i]= new Label(PhoneBook.entryList[PhoneBook.entryIndexList[i]].name);
-			numberLabel[i]=new Label(PhoneBook.entryList[PhoneBook.entryIndexList[i]].number);
-			notesLabel[i]=new Label(PhoneBook.entryList[PhoneBook.entryIndexList[i]].notes);
-			GridPane.setConstraints(nameLabel[i], 0, i+2);
-			GridPane.setConstraints(numberLabel[i], 1, i+2);
-			GridPane.setConstraints(notesLabel[i], 2, i+2);
-		}
-		for(int i = 0; i< PhoneBook.entryIndex;i++) {
-			grid.getChildren().addAll(nameLabel[i],numberLabel[i],notesLabel[i]);
-		}
 	}
 }
